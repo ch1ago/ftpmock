@@ -11,9 +11,11 @@ module Ftpmock
 
   class Configuration
     attr_writer :path
+    attr_accessor :verbose
 
-    def initialize(path: nil)
+    def initialize(path: nil, verbose: true)
       @path = path
+      @verbose = verbose
     end
 
     def path

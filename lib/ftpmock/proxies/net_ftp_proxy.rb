@@ -41,5 +41,62 @@ module Ftpmock
 
     attr_reader :configuration,
                 :real
+
+    # TODO: Methods Not Implemented
+
+    # abort
+    # acct
+    # binary
+    # binary=
+    # close
+    # closed?
+    # debug_mode
+    # debug_mode=
+    # delete
+    # help
+    # last_response
+    # last_response_code
+    # mdtm
+    # mkdir
+    # mlsd
+    # mlst
+    # mon_enter
+    # mon_exit
+    # mon_locked?
+    # mon_owned?
+    # mon_synchronize
+    # mon_try_enter
+    # mtime
+    # new_cond
+    # nlst
+    # noop
+    # open_timeout
+    # open_timeout=
+    # passive
+    # passive=
+    # quit
+    # read_timeout
+    # read_timeout=
+    # rename
+    # resume
+    # resume=
+    # retrbinary
+    # retrlines
+    # return_code
+    # return_code=
+    # rmdir
+    # sendcmd
+    # set_socket
+    # site
+    # size
+    # ssl_handshake_timeout
+    # ssl_handshake_timeout=
+    # status
+    # storbinary
+    # storlines
+    # system
+    # voidcmd
+    # welcome
+    include MethodMissingMixin
   end
 end

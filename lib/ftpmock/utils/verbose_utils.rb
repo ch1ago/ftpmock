@@ -1,0 +1,13 @@
+module Ftpmock
+  module VerboseUtils
+    module_function
+
+    def warn(string)
+      Kernel.warn string
+    end
+
+    def puts(string = '')
+      Kernel.puts string
+    end
+  end
+end

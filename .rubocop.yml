@@ -67,6 +67,13 @@ Style/Documentation:
 Style/GuardClause:
   Enabled: false
 
+Style/MethodMissingSuper:
+  Exclude:
+    - 'lib/ftpmock/proxies/method_missing_mixin.rb'
+Style/MissingRespondToMissing:
+  Exclude:
+    - 'lib/ftpmock/proxies/method_missing_mixin.rb'
+
 Metrics/BlockLength:
   # Max: 25
   Exclude:

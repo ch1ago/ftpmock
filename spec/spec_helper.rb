@@ -4,6 +4,7 @@ require 'ftpmock'
 
 Ftpmock.configure do |c|
   c.path = 'spec/records'
+  # c.verbose = true
 end
 
 RSpec.configure do |config|
