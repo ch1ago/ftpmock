@@ -11,7 +11,7 @@ module Ftpmock
              nil
            end
 
-    # inspired by https://github.com/bblimke/webmock/blob/master/lib/webmock/http_lib_adapters/net_http.rb
+    # inspired by https://github.com/bblimke/webmock/blob/master/lib/webmock/http_lib_caches/net_http.rb
     def self.on!
       unless Real
         yield
@@ -39,8 +39,73 @@ module Ftpmock
       @configuration = configuration
     end
 
+    def real
+      @real ||= Real.new
+    end
+
+    attr_writer :cache, :real
     attr_reader :configuration,
-                :real
+                :host,
+                :port,
+                :username,
+                :password
+
+    # connection methods
+
+    def connect(host, port = 21)
+      @real_connected = false
+      @host = host
+      @port = port
+
+      StringUtils.all_present?(host, port) || _raise_not_connected
+
+      @cache_connected = true
+      true
+    end
+
+    def login(username, password)
+      @cache = nil
+      @real_logged = false
+      @username = username
+      @password = password
+
+      _init_cache
+
+      @cache_logged = true
+      true
+    end
+
+    def _real_connect_and_login
+      @cache_connected || _raise_not_connected
+      @cache_logged || _raise_not_connected
+
+      @real_connected || real.connect(*_real_connect_args)
+      @real_connected = true
+
+      @real_logged || real.login(*_real_login_args)
+      @real_logged = true
+    end
+
+    def _real_connect_args
+      [host, port]
+    end
+
+    def _real_login_args
+      [username, password].select { |string| StringUtils.present?(string) }
+    end
+
+    def _init_cache
+      credentials = [host, port, username, password]
+      @cache = Cache.new(configuration, credentials)
+    end
+
+    def cache
+      @cache || _raise_not_connected
+    end
+
+    def _raise_not_connected
+      raise(Net::FTPConnectionError, 'not connected')
+    end
 
     # TODO: Methods Not Implemented
 
