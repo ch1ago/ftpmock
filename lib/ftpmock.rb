@@ -1,4 +1,4 @@
-require "ftpmock/version"
+require 'ftpmock/version'
 
 module Ftpmock
   class Error < StandardError; end

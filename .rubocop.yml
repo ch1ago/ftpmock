@@ -1,0 +1,62 @@
+inherit_from: .rubocop_todo.yml
+
+# If you see any problems here, please open a PR
+
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+  EnabledByDefault: false
+  UseCache: true
+  CacheRootDirectory: ~
+  TargetRubyVersion: 2.7
+  Exclude:
+    - 'a/*'
+    - 'bin/*'
+  Include:
+    - '**/*.gemspec'
+    - '**/*.god'
+    - '**/*.rake'
+    - '**/*.spec'
+    - '**/.irbrc'
+    - '**/.pryrc'
+    - '**/config.ru'
+    - '**/Capfile'
+    - '**/Gemfile'
+    - '**/Guardfile'
+    - '**/Rakefile'
+    - '**/Vagrantfile'
+    - 'test/**/*.rb'
+    - 'spec/**/*.rb'
+    - 'lib/**/*.rb'
+
+# By Namespace
+
+Layout:
+  Enabled: true
+Lint:
+  Enabled: true
+Metrics:
+  Enabled: true
+Naming:
+  Enabled: true
+Style:
+  Enabled: true
+
+# Undefaulted
+
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+
+# Custom
+
+Metrics/LineLength:
+  Max: 80
+
+# If you think this should be true, reach out!
+Style/FrozenStringLiteralComment:
+  Enabled: false
