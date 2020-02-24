@@ -84,6 +84,11 @@ module Ftpmock
 
       @real_logged || real.login(*_real_login_args)
       @real_logged = true
+
+      if @chdir
+        @real.chdir(@chdir)
+        @chdir = nil
+      end
     end
 
     def _real_connect_args
@@ -105,6 +110,21 @@ module Ftpmock
 
     def _raise_not_connected
       raise(Net::FTPConnectionError, 'not connected')
+    end
+
+    # directory methods
+
+    # https://docs.ruby-lang.org/en/2.0.0/Net/FTP.html#method-i-chdir
+    def chdir(dirname = nil)
+      cache.chdir(dirname)
+    end
+
+    def pwd
+      chdir
+    end
+
+    def getdir
+      chdir
     end
 
     # TODO: Methods Not Implemented

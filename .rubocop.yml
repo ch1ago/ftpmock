@@ -82,3 +82,7 @@ Metrics/BlockLength:
 Naming/ConstantName:
   Exclude:
     - 'lib/ftpmock/proxies/*_proxy.rb'
+
+Naming/MethodParameterName:
+  Exclude:
+    - 'spec/ftpmock/helpers/path_helper_spec.rb'

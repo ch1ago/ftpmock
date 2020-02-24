@@ -16,5 +16,38 @@ RSpec.describe Ftpmock::Cache do
         expect(cache.path.to_s).to eq('spec/records/cache_test_21_a_b')
       end
     end
+
+    describe 'chdir' do
+      it 'delegates to PathHelper' do
+        # Then 'it delegates'
+        expect(Ftpmock::PathHelper).to receive(:join).with(nil, 'foo')
+
+        # When 'I run cache.chdir'
+        cache.chdir('foo')
+      end
+
+      it 'can be read as well' do
+        # Given 'no chdir was set'
+        expect(cache.chdir.to_s).to eq('')
+
+        # When 'I run cache.chdir with an argument'
+        cache.chdir('foo')
+
+        # Then 'the chdir is changed'
+        expect(cache.chdir.to_s).to eq('foo')
+      end
+
+      it 'can change cumulatively' do
+        # Given 'a starting chdir'
+        cache.chdir('foo')
+        expect(cache.chdir.to_s).to eq('foo')
+
+        # When 'I run cache.chdir with an argument'
+        cache.chdir('bar')
+
+        # Then 'the chdir is changed'
+        expect(cache.chdir.to_s).to eq('foo/bar')
+      end
+    end
   end
 end

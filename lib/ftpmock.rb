@@ -1,6 +1,6 @@
 require 'ftpmock/version'
 
-Dir['lib/ftpmock/{utils,core,proxies}/*.rb'].each do |f|
+Dir['lib/ftpmock/{utils,core,helpers,proxies}/*.rb'].each do |f|
   load f
 end
 

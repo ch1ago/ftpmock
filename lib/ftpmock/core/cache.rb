@@ -5,6 +5,7 @@ module Ftpmock
     def initialize(configuration, credentials)
       @configuration = configuration
       @credentials = credentials
+      @chdir = nil
     end
 
     def path
@@ -13,6 +14,12 @@ module Ftpmock
 
     def path_dir
       StringUtils.parameterize(credentials.map(&:to_s).join('_'))
+    end
+
+    def chdir(dirname = nil)
+      return @chdir if dirname.nil?
+
+      @chdir = PathHelper.join(@chdir, dirname)
     end
   end
 end
