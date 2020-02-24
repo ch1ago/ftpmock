@@ -1,25 +1,24 @@
-# https://apidock.com/ruby/Net/FTP
-require 'net/ftp'
+# https://github.com/net-ssh/net-sftp
 
 module Ftpmock
-  class NetFtpProxy
+  class NetSftpProxy
     # Stubbers
 
     Real = begin
-             Net::FTP
+             Net::SFTP
            rescue NameError
              nil
            end
 
-    # inspired by https://github.com/bblimke/webmock/blob/master/lib/webmock/http_lib_adapters/net_http.rb
+    # inspired by https://github.com/bblimke/webmock/blob/master/lib/webmock/http_lib_caches/net_http.rb
     def self.on!
       unless Real
         yield
         return
       end
 
-      Net.send(:remove_const, :FTP)
-      Net.const_set(:FTP, self)
+      Net.send(:remove_const, :SFTP)
+      Net.const_set(:SFTP, self)
       if block_given?
         yield
         off!
@@ -29,8 +28,8 @@ module Ftpmock
     def self.off!
       return unless Real
 
-      Net.send(:remove_const, :FTP)
-      Net.const_set(:FTP, Real)
+      Net.send(:remove_const, :SFTP)
+      Net.const_set(:SFTP, Real)
     end
 
     # Instance Methods
@@ -39,7 +38,13 @@ module Ftpmock
       @configuration = configuration
     end
 
-    attr_reader :configuration,
-                :real
+    # def self.start(*)
+    #   i = new
+    #   yield i
+    # end
+
+    def real
+      @real ||= Real.new
+    end
   end
 end

@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'net/sftp'
 require 'ftpmock'
 
 Ftpmock.configure do |c|

@@ -4,6 +4,9 @@ RSpec.describe Ftpmock do
       it 'delegates to NetFtpProxy' do
         expect(Ftpmock::NetFtpProxy).to receive(:on!)
       end
+      it 'delegates to NetSftpProxy' do
+        expect(Ftpmock::NetSftpProxy).to receive(:on!)
+      end
 
       after do
         Ftpmock.on! {}
@@ -13,6 +16,9 @@ RSpec.describe Ftpmock do
     describe 'off!' do
       it 'delegates to NetFtpProxy' do
         expect(Ftpmock::NetFtpProxy).to receive(:off!)
+      end
+      it 'delegates to NetSftpProxy' do
+        expect(Ftpmock::NetSftpProxy).to receive(:off!)
       end
 
       after do
