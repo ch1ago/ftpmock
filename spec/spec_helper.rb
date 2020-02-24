@@ -18,3 +18,8 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+def expect_verbose_alert(color, tag, message)
+  receive_this = receive(:alert).once.with(tag, message, color)
+  expect(Ftpmock::VerboseUtils).to receive_this
+end

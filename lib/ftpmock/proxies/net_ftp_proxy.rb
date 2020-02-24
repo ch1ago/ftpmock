@@ -127,6 +127,15 @@ module Ftpmock
       chdir
     end
 
+    # list methods
+
+    def list(*args)
+      cache.list(*args) do
+        _real_connect_and_login
+        real.list(*args)
+      end
+    end
+
     # TODO: Methods Not Implemented
 
     # abort

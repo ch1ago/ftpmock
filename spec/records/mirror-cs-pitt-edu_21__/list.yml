@@ -1,0 +1,11 @@
+---
+'':
+- drwxr-xr-x   16 0        0            4096 Jun 14  2016 archlinux
+- drwxrwxr-x   52 1005     1005         4096 Jan 15 14:15 centos
+- drwxrwsr-x    9 263      263          4096 Feb 23 01:48 epel
+- drwxr-xr-x    3 263      263          4096 Feb 23 02:36 fedora
+- drwxr-xr-x    5 3378     2775         4096 May 09  2014 ubuntu
+ubuntu:
+- drwxr-xr-x    7 1002     1002         4096 Feb 17 15:53 archive
+- drwx------    2 0        0            4096 Jun 25  2014 lost+found
+- drwxr-xr-x   12 448      1731         4096 Feb 17 19:20 releases

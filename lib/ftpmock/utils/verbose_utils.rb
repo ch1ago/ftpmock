@@ -9,5 +9,11 @@ module Ftpmock
     def puts(string = '')
       Kernel.puts string
     end
+
+    def alert(tag, content, color)
+      content = ColorUtils.colorize(content, color)
+      output = ColorUtils.bold "#{tag} -> #{content}"
+      puts output
+    end
   end
 end

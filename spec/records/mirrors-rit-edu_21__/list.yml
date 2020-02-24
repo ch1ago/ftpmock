@@ -1,0 +1,70 @@
+---
+'':
+- drwxrwxr-x   13 1003     1003         4096 Feb 23 14:55 CPAN
+- drwxrwsr-x   10 1003     1003         4096 Feb 23 18:07 CRAN
+- drwxr-xr-x   18 1003     1003         4096 Feb 23 16:02 CTAN
+- drwxrwxr-x    5 1003     1003           98 Feb 23 10:00 FreeBSD
+- "-rw-r--r--    1 1003     1003         1057 May 18  2016 HEADER.txt"
+- drwxr-xr-x   15 1003     1003          226 Feb 23 14:35 OpenBSD
+- drwxr-xr-x    4 1003     1003           39 Aug 16  2013 archie
+- drwxr-xr-x   16 1003     1003          314 Feb 23 19:22 archlinux
+- drwxr-xr-x   14 1003     1003          217 Mar 29  2019 artixlinux
+- drwxrwxr-x   52 1003     1003         4096 Jan 15 14:15 centos
+- drwxr-xr-x   36 1003     1003         4096 Jan 31 14:17 ceph
+- drwxr-xr-x    2 1003     1003           24 Jan 19  2010 cgi-bin
+- drwxrwsr-x   11 1003     1003          162 Nov 24 14:16 chakra
+- drwxr-xr-x    4 1005     1005           30 Jan 08 21:24 cptc
+- drwxr-xr-x    6 10973    1003          111 Jul 23  2019 cuda
+- drwxrwsr-x    6 1003     1003          113 Jan 31  2018 cygwin
+- drwxr-xr-x   10 1003     1003          268 Feb 23 15:03 debian
+- drwxrwxr-x    7 1003     1003          114 Feb 20 05:14 elrepo
+- lrwxrwxrwx    1 1003     1003           13 Jul 25  2014 epel -> ./fedora/epel
+- "-rw-r--r--    1 1003     1003         1406 Jul 21  2014 favicon.ico"
+- drwxr-xr-x    7 1003     1003          137 Feb 23 05:45 fedora
+- lrwxrwxrwx    1 1003     1003           16 Jul 21  2014 fedora-archive -> ./fedora/archive
+- lrwxrwxrwx    1 1003     1003           12 Jul 21  2014 fedora-other -> ./fedora/alt
+- lrwxrwxrwx    1 1003     1003           25 Jul 21  2014 fedora-secondary -> ./fedora/fedora-secondary
+- drwxr-xr-x    6 1003     1003           76 Mar 28  2011 gentoo
+- drwxr-xr-x  175 1003     1003         8192 Feb 23 18:39 gentoo-rsync
+- drwxrwxr-x  323 1003     1003        12288 Feb 16 07:35 gnu
+- drwxrwsr-x    3 1003     1003        12288 Dec 30  2018 grml
+- drwxr-xr-x    8 1003     1003          117 Sep 29  2018 haiku
+- drwxr-xr-x    2 1003     1003          118 Jun 21  2018 hbcd
+- drwxr-xr-x    2 1003     1003           72 Apr 24  2012 instantCSI
+- drwxrwsr-x    2 1003     4635          104 Nov 21  2018 ip-blacklist
+- drwxr-xr-x    5 1003     1003          117 Feb 23 12:14 kali
+- drwxr-xr-x    8 1003     1003          145 Feb 23 01:48 kali-images
+- drwxr-xr-x    3 1003     1003           35 Sep 05  2016 kali-security
+- drwxr-xr-x    4 1003     1003           59 Feb 20  2018 knoppix
+- drwxr-xr-x   10 1003     1003          163 Sep 08 08:45 lineage
+- drwxr-xr-x    4 1003     1003           40 Nov 30  2018 mxlinux
+- drwxr-xr-x    6 1003     1003           68 Sep 06  2018 opensuse
+- drwxr-xr-x    4 1003     1003           33 Aug 08  2019 ovirt
+- lrwxrwxrwx    1 1003     1003            1 Jul 21  2014 pub -> .
+- drwxr-xr-x    3 1003     1003           93 Feb 23 16:37 raspbian
+- drwxr-xr-x    4 1003     1003           32 Feb 18 18:39 redhat
+- drwxr-xr-x   21 10973    1003         4096 Nov 04 14:52 rit
+- lrwxrwxrwx    1 1003     1003            9 Mar 29  2016 rit-slurm -> rit/slurm
+- "-rw-r--r--    1 1003     1003           26 Jul 21  2014 robots.txt"
+- drwxr-xr-x    4 1003     1003           60 Oct 25  2018 rpmfusion
+- drwxr-xr-x   31 1003     1003         4096 Aug 19  2019 scientific
+- drwxr-xr-x   29 1003     1003         4096 Mar 11  2018 slackware
+- drwxr-xr-x    4 1003     1003           36 Feb 09  2019 solus
+- drwxrwsr-x   11 1003     1003          245 Feb 08  2016 sugarlabs
+- lrwxrwxrwx    1 1003     1003           16 Jul 11  2016 torrents.rss -> torrents_rss.xml
+- "-rw-rw-r--    1 10973    1003        70032 Mar 15  2019 torrents_atom.xml"
+- "-rw-rw-r--    1 10973    1003        71690 Mar 15  2019 torrents_rss.xml"
+- drwxr-xr-x    2 1003     1003          173 Nov 15  2018 ubcd
+- drwxr-xr-x    7 1003     1003          105 Feb 23 17:21 ubuntu
+- lrwxrwxrwx    1 1003     1003            6 Nov 20  2015 ubuntu-archive -> ubuntu
+- drwxr-xr-x   25 1003     1003         4096 Feb 23 17:20 ubuntu-cdimage
+- drwxr-xr-x   12 1003     1003         4096 Feb 23 16:01 ubuntu-releases
+- drwxr-xr-x   10 1003     1003          124 Mar 24  2019 voidlinux
+- drwxr-xr-x    5 1003     1003        16384 Feb 06 13:05 zi
+ubuntu:
+- drwxrwxr-x   37 1003     1003         4096 Oct 18 10:51 dists
+- drwxr-xr-x    2 1003     1003       143360 Feb 23 17:14 indices
+- -rw-r--r--    1 1003     1003     20233603 Feb 23 17:14 ls-lR.gz
+- drwxrwxr-x    6 1003     1003           70 Feb 27  2010 pool
+- drwxr-xr-x    3 1003     1003           91 Jun 28  2013 project
+- lrwxrwxrwx    1 1003     1003            1 Nov 24  2010 ubuntu -> .
