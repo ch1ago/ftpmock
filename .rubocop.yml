@@ -60,3 +60,14 @@ Metrics/LineLength:
 # If you think this should be true, reach out!
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Metrics/BlockLength:
+  # Max: 25
+  Exclude:
+    - 'spec/**/*.rb'
