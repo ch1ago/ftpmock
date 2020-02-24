@@ -9,6 +9,7 @@ RSpec.describe Ftpmock::NetFtpProxy do
     before do
       proxy.connect(host, port)
       proxy.login(username, password)
+      allow(Ftpmock::VerboseUtils).to receive(:puts)
     end
 
     describe 'Ubuntu Download - University of Pittsburgh' do

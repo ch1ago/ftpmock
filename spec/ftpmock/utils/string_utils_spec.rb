@@ -33,4 +33,35 @@ RSpec.describe Ftpmock::StringUtils do
       expect(subject.parameterize("\u9999")).to eq('-')
     end
   end
+
+  describe '#diff' do
+    before do
+      @f1a = 'tmp/diffy_1a.txt'
+      File.write(@f1a, "111\n222\n")
+
+      @f1b = 'tmp/diffy_1b.txt'
+      File.write(@f1b, "111\n222\n")
+
+      @f1c = 'tmp/diffy_1c.txt'
+      File.write(@f1c, "111\n222\n333\n")
+    end
+
+    after do
+      File.delete @f1a
+      File.delete @f1b
+      File.delete @f1c
+    end
+
+    it 'returns an empty line when comparing equal files' do
+      ret = Ftpmock::StringUtils.diff(@f1a, @f1b)
+
+      expect(ret).to eq("\n")
+    end
+
+    it 'returns the proper diff when comparing different files' do
+      ret = Ftpmock::StringUtils.diff(@f1a, @f1c)
+
+      expect(ret).to eq(" 111\n 222\n\e[32m+333\e[0m\n")
+    end
+  end
 end

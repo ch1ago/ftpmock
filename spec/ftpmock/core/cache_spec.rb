@@ -6,6 +6,10 @@ RSpec.describe Ftpmock::Cache do
   let(:credentials) { [host, port, username, password] }
   let(:cache) { Ftpmock::Cache.new(Ftpmock.configuration, credentials) }
 
+  before do
+    allow(Ftpmock::VerboseUtils).to receive(:puts)
+  end
+
   describe 'Instance Methods' do
     describe 'path' do
       it 'is a Pathname' do
@@ -188,6 +192,134 @@ RSpec.describe Ftpmock::Cache do
             cache.get('remotefile', localfile) do
             end
           end
+        end
+      end
+    end
+
+    describe 'put' do
+      let(:localfile) { "tmp/cache_put_#{SecureRandom.uuid}" }
+
+      describe 'if localfile does not exist' do
+        it 'fails, skips block, skips comparing, skips writing to cache' do
+          block_has_run = false
+
+          # Given 'localfile does not exist'
+          expect(Ftpmock::PutHelper).to receive(:exist?).and_return(false)
+
+          # Then 'it skips writing to cache'
+          expect(Ftpmock::PutHelper).not_to receive(:write)
+          # Then 'it skips comparing'
+          expect(Ftpmock::PutHelper).not_to receive(:compare)
+
+          # Then 'an error should be raised'
+          expect do
+            # When 'I run cache.put(remotefile)'
+            cache.put('remotefile', localfile) do
+              block_has_run = true
+            end
+          end.to raise_error(Ftpmock::PutFileNotFound)
+
+          # Then 'it should yield the block'
+          expect(block_has_run).to eq(false)
+        end
+      end
+
+      describe 'if cache hits' do
+        before do
+          # Given 'localfile exists'
+          expect(Ftpmock::PutHelper).to receive(:exist?).and_return(true)
+
+          # Given 'remotefile is cached'
+          expect(Ftpmock::PutHelper).to receive(:cached?).and_return(true)
+        end
+
+        it 'skips block' do
+          block_has_run = false
+
+          # Given 'localfile and remotefile have the same content'
+          expect(Ftpmock::PutHelper).to receive(:compare).and_return([])
+
+          # When 'I run cache.put(remotefile)'
+          cache.put('remotefile', localfile) do
+            block_has_run = true
+          end
+
+          # Then 'it should skip the block'
+          expect(block_has_run).to eq(false)
+        end
+
+        it 'skips writing to cache' do
+          # Given 'localfile and remotefile have the same content'
+          expect(Ftpmock::PutHelper).to receive(:compare).and_return([])
+
+          # Then 'it skips writing to cache'
+          expect(Ftpmock::PutHelper).not_to receive(:write)
+
+          # When 'I run cache.put(remotefile)'
+          cache.put('remotefile', localfile) do
+          end
+        end
+
+        it 'compares localfile to remotefile' do
+          # Given 'localfile and remotefile have the same content'
+          expect(Ftpmock::PutHelper).to receive(:compare).and_return([])
+
+          # When 'I run cache.put(remotefile)'
+          cache.put('remotefile', localfile) do
+          end
+        end
+
+        describe 'comparing localfile to remotefile' do
+          describe 'if they are the same' do
+            it 'skips' do
+              # Given 'localfile and remotefile have the same content'
+              expect(Ftpmock::PutHelper).to receive(:compare).and_return([])
+
+              # When 'I run cache.put(remotefile)'
+              cache.put('remotefile', localfile) do
+              end
+            end
+          end
+
+          describe 'if they are differ' do
+            it 'fails and outputs message' do
+              # Given 'localfile and remotefile have the same content'
+              expect(Ftpmock::PutHelper).to receive(:compare).and_return(['+a'])
+              # Then 'it outputs message'
+              expect(Ftpmock::VerboseUtils).to receive(:puts).exactly(7).times
+
+              # Then 'an error should be raised'
+              expect do
+                # When 'I run cache.put(remotefile)'
+                cache.put('remotefile', localfile) do
+                end
+              end.to raise_error(Ftpmock::PutLocalDiffersFromCache)
+            end
+          end
+        end
+      end
+
+      describe 'if cache misses' do
+        before do
+          # Given 'localfile exists'
+          expect(Ftpmock::PutHelper).to receive(:exist?).and_return(true)
+
+          # Given 'remotefile is not cached'
+          expect(Ftpmock::PutHelper).to receive(:cached?).and_return(false)
+        end
+
+        it 'runs block and writes to cache' do
+          block_has_run = false
+          # Given 'localfile and remotefile have the same content'
+          expect(Ftpmock::PutHelper).to receive(:write)
+
+          # When 'I run cache.put(remotefile)'
+          cache.put('remotefile', localfile) do
+            block_has_run = true
+          end
+
+          # Then 'it should yield the block'
+          expect(block_has_run).to eq(true)
         end
       end
     end

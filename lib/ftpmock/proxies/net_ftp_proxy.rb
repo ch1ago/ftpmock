@@ -165,6 +165,40 @@ module Ftpmock
       true
     end
 
+    # put methods
+
+    # TODO: block
+    # https://docs.ruby-lang.org/en/2.0.0/Net/FTP.html#method-i-put
+    def put(localfile, remotefile = File.basename(localfile))
+      cache.put(localfile, remotefile) do
+        _real_connect_and_login
+        real.put(localfile, remotefile)
+      end
+
+      true
+    end
+
+    # TODO: block
+    def puttextfile(localfile, remotefile = File.basename(localfile))
+      cache.put(localfile, remotefile) do
+        _real_connect_and_login
+        real.puttextfile(localfile, remotefile)
+      end
+
+      true
+    end
+
+    # TODO: block
+    def putbinaryfile(localfile, remotefile = File.basename(localfile))
+      cache.put(localfile, remotefile) do
+        _real_connect_and_login
+        real.putbinaryfile(localfile, remotefile)
+      end
+
+      true
+    end
+
+<<<<<<< HEAD
     # TODO: Methods Not Implemented
 
     # abort

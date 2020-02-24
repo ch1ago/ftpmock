@@ -1,3 +1,5 @@
+require 'diffy'
+
 module Ftpmock
   module StringUtils
     module_function
@@ -18,6 +20,10 @@ module Ftpmock
       string.to_s
             .gsub(/[^a-z0-9\-_]+/i, separator)
             .downcase
+    end
+
+    def diff(localfile, path)
+      Diffy::Diff.new(localfile.to_s, path.to_s, source: 'files').to_s(:color)
     end
   end
 end

@@ -113,5 +113,74 @@ module Ftpmock
       msg = "#{msg}, but didn't."
       raise GetNotFetched, msg
     end
+
+    def put(localfile, remotefile = File.basename(localfile))
+      tag = _put_tag_for(localfile)
+
+      _put_alert_exists(tag)
+      PutHelper.exist?(localfile) || _put_raise_not_found(remotefile, localfile)
+
+      if PutHelper.cached?(path, remotefile)
+        _put_cached(tag, path, localfile, remotefile)
+      else
+        _put_alert_miss(tag)
+        yield
+
+        _put_alert_storing(tag, remotefile)
+        PutHelper.write(path, localfile, remotefile)
+      end
+
+      true
+    end
+
+    def _put_tag_for(localfile)
+      tag = "ftpmock.cache.put '#{localfile}'"
+      tag += ", chdir: '#{chdir}'" if chdir
+      tag
+    end
+
+    def _put_alert_exists(tag)
+      _alert tag, 'file exists?'
+    end
+
+    def _put_alert_miss(tag)
+      _alert tag, 'miss!', :yellow
+    end
+
+    def _put_alert_storing(tag, remotefile)
+      _alert tag, "storing #{remotefile}"
+    end
+
+    def _put_cached(tag, path, localfile, remotefile)
+      diff = PutHelper.compare(path, localfile, remotefile)
+
+      _put_alert_hit(tag, diff.size)
+
+      diff.any? && _put_raise_localfile_differs(remotefile, localfile, diff)
+    end
+
+    def _put_alert_hit(tag, size)
+      color = size.zero? ? :green : :red
+      _alert tag, "hit! (#{size} differing lines)", color
+    end
+
+    def _put_raise_not_found(remotefile, localfile)
+      msg = "FTP PUT '#{remotefile}' has failed"
+      msg = "#{msg} because '#{localfile}' does not exist."
+      raise PutFileNotFound, msg
+    end
+
+    def _put_raise_localfile_differs(remotefile, localfile, diff)
+      spaces = ' ' * 20
+      VerboseUtils.puts
+      VerboseUtils.puts ColorUtils.highlight "#{spaces}Diffy Begin#{spaces}"
+      VerboseUtils.puts diff
+      VerboseUtils.puts ColorUtils.highlight "#{spaces} Diffy End #{spaces}"
+      VerboseUtils.puts
+
+      msg = "FTP PUT '#{remotefile}' has failed because"
+      msg = "#{msg} '#{localfile}' contents don't match #{path}/#{remotefile}"
+      raise PutLocalDiffersFromCache, msg
+    end
   end
 end
