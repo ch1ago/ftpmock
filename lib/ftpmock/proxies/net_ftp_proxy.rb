@@ -136,6 +136,35 @@ module Ftpmock
       end
     end
 
+    # get methods
+
+    def get(remotefile, localfile = File.basename(remotefile))
+      cache.get(remotefile, localfile) do
+        _real_connect_and_login
+        real.get(remotefile, localfile)
+      end
+
+      true
+    end
+
+    def gettextfile(remotefile, localfile = File.basename(remotefile))
+      cache.get(remotefile, localfile) do
+        _real_connect_and_login
+        real.gettextfile(remotefile, localfile)
+      end
+
+      true
+    end
+
+    def getbinaryfile(remotefile, localfile = File.basename(remotefile))
+      cache.get(remotefile, localfile) do
+        _real_connect_and_login
+        real.getbinaryfile(remotefile, localfile)
+      end
+
+      true
+    end
+
     # TODO: Methods Not Implemented
 
     # abort

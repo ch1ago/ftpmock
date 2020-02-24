@@ -54,8 +54,10 @@ Style/HashTransformValues:
 
 # Custom
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 80
+  Exclude:
+    - 'spec/ftpmock/proxies_net_ftp/integration_spec.rb'
 
 # If you think this should be true, reach out!
 Style/FrozenStringLiteralComment:
@@ -85,4 +87,18 @@ Naming/ConstantName:
 
 Naming/MethodParameterName:
   Exclude:
-    - 'spec/ftpmock/helpers/path_helper_spec.rb'
+    - 'spec/ftpmock/helpers/*.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'spec/ftpmock/helpers/*.rb'
+
+Metrics/MethodLength:
+  # Max: 10 (default)
+  Max: 15
+  Exclude:
+    - 'spec/ftpmock/helpers/*.rb'
+
+Metrics/ClassLength:
+  # Max: 100 (default)
+  Max: 200

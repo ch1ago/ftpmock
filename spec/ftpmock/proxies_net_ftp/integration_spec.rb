@@ -44,6 +44,45 @@ RSpec.describe Ftpmock::NetFtpProxy do
           expect(ret.size).to eq(3)
         end
       end
+
+      describe 'get' do
+        let(:remotefile) { '/ubuntu/releases/robots.txt' }
+        let(:localfile) { 'tmp/robots-pitt-edu.txt' }
+
+        example 'verbose messages' do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.get '/ubuntu/releases/robots.txt'",
+                               'hit! (tmp/robots-pitt-edu.txt)'
+          proxy.get(remotefile, localfile)
+        end
+
+        example 'localfile should exist' do
+          proxy.get(remotefile, localfile)
+          expect(File).to exist(localfile)
+        end
+
+        example 'expect the real library not to receive get' do
+          expect(proxy.real).not_to receive(:get)
+          proxy.get(remotefile, localfile)
+        end
+
+        example 'expect proxy.cache receive get with the right args' do
+          args = [remotefile, localfile]
+          expect(proxy.cache).to receive(:get).with(*args).and_return(true)
+          proxy.get(remotefile, localfile)
+        end
+
+        example 'expect GetHelper receive read with the right args' do
+          args = [Pathname('spec/records/mirror-cs-pitt-edu_21__'), nil, remotefile, localfile]
+          expect(Ftpmock::GetHelper).to receive(:read).with(*args).and_return(true)
+          proxy.get(remotefile, localfile)
+        end
+
+        example 'expects GetHelper to have cached the file on the expected location' do
+          proxy.get(remotefile, localfile)
+          expect(File).to exist('spec/records/mirror-cs-pitt-edu_21__/get/ubuntu-releases-robots_txt')
+        end
+      end
     end
 
     describe 'Ubuntu Download - Rochester Institute of Technology' do
@@ -77,6 +116,45 @@ RSpec.describe Ftpmock::NetFtpProxy do
           proxy.chdir('/ubuntu')
           ret = proxy.list
           expect(ret.size).to eq(6)
+        end
+      end
+
+      describe 'get' do
+        let(:remotefile) { '/ubuntu-releases/robots.txt' }
+        let(:localfile) { 'tmp/robots-rit-edu.txt' }
+
+        example 'verbose messages' do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.get '/ubuntu-releases/robots.txt'",
+                               'hit! (tmp/robots-rit-edu.txt)'
+          proxy.get(remotefile, localfile)
+        end
+
+        example 'localfile should exist' do
+          proxy.get(remotefile, localfile)
+          expect(File).to exist(localfile)
+        end
+
+        example 'expect the real library not to receive get' do
+          expect(proxy.real).not_to receive(:get)
+          proxy.get(remotefile, localfile)
+        end
+
+        example 'expect proxy.cache receive get with the right args' do
+          args = [remotefile, localfile]
+          expect(proxy.cache).to receive(:get).with(*args).and_return(true)
+          proxy.get(remotefile, localfile)
+        end
+
+        example 'expect GetHelper receive read with the right args' do
+          args = [Pathname('spec/records/mirrors-rit-edu_21__'), nil, remotefile, localfile]
+          expect(Ftpmock::GetHelper).to receive(:read).with(*args).and_return(true)
+          proxy.get(remotefile, localfile)
+        end
+
+        example 'expects GetHelper to have cached the file on the expected location' do
+          proxy.get(remotefile, localfile)
+          expect(File).to exist('spec/records/mirrors-rit-edu_21__/get/ubuntu-releases-robots_txt')
         end
       end
     end

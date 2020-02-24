@@ -6,6 +6,7 @@ end
 
 module Ftpmock
   class Error < StandardError; end
+  class GetNotFetched < StandardError; end
 
   def self.on!(&block)
     NetFtpProxy.on! do

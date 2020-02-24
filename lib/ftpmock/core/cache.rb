@@ -70,5 +70,48 @@ module Ftpmock
     def _list_alert_storing(tag, list)
       _alert tag, "storing #{list.size} lines!"
     end
+
+    def get(remotefile, localfile = File.basename(remotefile))
+      tag = _get_tag_for(remotefile)
+
+      if GetHelper.read(path, chdir, remotefile, localfile)
+        _get_alert_hit(tag, localfile)
+        return
+      end
+
+      _get_alert_miss(tag)
+      yield
+
+      if GetHelper.fetched?(localfile)
+        _get_alert_storing(tag, localfile)
+        GetHelper.write(path, chdir, remotefile, localfile)
+      else
+        _get_raise_localfile_not_fetched(remotefile, localfile)
+      end
+    end
+
+    def _get_tag_for(remotefile)
+      tag = "ftpmock.cache.get '#{remotefile}'"
+      tag += ", chdir: '#{chdir}'" if chdir
+      tag
+    end
+
+    def _get_alert_hit(tag, localfile)
+      _alert tag, "hit! (#{localfile})"
+    end
+
+    def _get_alert_miss(tag)
+      _alert tag, 'miss!', :yellow
+    end
+
+    def _get_alert_storing(tag, localfile)
+      _alert tag, "storing #{localfile}"
+    end
+
+    def _get_raise_localfile_not_fetched(remotefile, localfile)
+      msg = "FTP GET '#{remotefile}' should have created '#{localfile}'"
+      msg = "#{msg}, but didn't."
+      raise GetNotFetched, msg
+    end
   end
 end

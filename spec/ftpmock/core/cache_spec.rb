@@ -106,5 +106,90 @@ RSpec.describe Ftpmock::Cache do
         end
       end
     end
+
+    describe 'get' do
+      let(:localfile) { "tmp/cache_get_#{SecureRandom.uuid}" }
+      describe 'if cache is found' do
+        before do
+          # Given 'GetHelper.read returns true'
+          expect(Ftpmock::GetHelper).to receive(:read).and_return(true)
+        end
+
+        it 'skips the block' do
+          block_has_run = false
+
+          # When 'I run cache.get(remotefile)'
+          cache.get('remotefile', localfile) do
+            block_has_run = true
+          end
+
+          # Then 'it should not yield the block'
+          expect(block_has_run).to eq(false)
+        end
+
+        it 'skips writing to cache' do
+          # Then 'GetHelper should not receive :write'
+          expect(Ftpmock::GetHelper).not_to receive(:write)
+
+          # When 'I run cache.get(remotefile)'
+          cache.get('remotefile', localfile) do
+          end
+        end
+      end
+
+      describe 'if cache misses' do
+        before do
+          # Given 'GetHelper.read returns false'
+          expect(Ftpmock::GetHelper).to receive(:read).and_return(false)
+        end
+
+        it 'runs the block and verifies remotefile fetching' do
+          expect(Ftpmock::GetHelper).to receive(:fetched?).and_return(true)
+          expect(Ftpmock::GetHelper).to receive(:write)
+
+          block_has_run = true
+
+          # When 'I run cache.get(remotefile)'
+          cache.get('remotefile', localfile) do
+            block_has_run = true
+          end
+
+          # Then 'it should yield the block'
+          expect(block_has_run).to eq(true)
+        end
+
+        describe 'if remotefile was not fetched' do
+          before do
+            # Given 'GetHelper.fetched? returns false'
+            expect(Ftpmock::GetHelper).to receive(:fetched?).and_return(false)
+          end
+
+          it 'fails' do
+            # Then 'an error should be raised'
+            expect do
+              # When 'I run cache.get(remotefile)'
+              cache.get('remotefile', localfile) do
+              end
+            end.to raise_error(Ftpmock::GetNotFetched)
+          end
+        end
+
+        describe 'if remotefile was fetched' do
+          before do
+            # Given 'GetHelper.fetched? returns false'
+            expect(Ftpmock::GetHelper).to receive(:fetched?).and_return(true)
+          end
+
+          it 'writes to cache' do
+            # Then 'GetHelper should receive :write'
+            expect(Ftpmock::GetHelper).to receive(:write)
+
+            # When 'I run cache.get(remotefile)'
+            cache.get('remotefile', localfile) do
+            end
+          end
+        end
+      end
+    end
   end
 end

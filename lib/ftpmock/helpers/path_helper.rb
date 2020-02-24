@@ -14,5 +14,11 @@ module Ftpmock
     def join(path_a, path_b)
       clean Pathname(path_a.to_s).join(path_b.to_s)
     end
+
+    def simplify(path)
+      path.to_s
+          .tr('/', '-')
+          .tr('..', '__')
+    end
   end
 end
