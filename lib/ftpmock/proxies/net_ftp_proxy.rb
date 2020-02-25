@@ -198,7 +198,6 @@ module Ftpmock
       true
     end
 
-<<<<<<< HEAD
     # TODO: Methods Not Implemented
 
     # abort
