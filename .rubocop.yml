@@ -77,7 +77,6 @@ Style/MissingRespondToMissing:
     - 'lib/ftpmock/proxies/method_missing_mixin.rb'
 
 Metrics/BlockLength:
-  # Max: 25
   Exclude:
     - 'spec/**/*.rb'
 
@@ -89,10 +88,14 @@ Naming/MethodParameterName:
   Exclude:
     - 'spec/ftpmock/helpers/*.rb'
 
+# http://c2.com/cgi/wiki?AbcMetric, https://en.wikipedia.org/wiki/ABC_Software_Metric
 Metrics/AbcSize:
+  # Max: 15 (default)
+  Max: 20
   Exclude:
     - 'spec/ftpmock/helpers/*.rb'
 
+# https://rubystyle.guide#short-methods
 Metrics/MethodLength:
   # Max: 10 (default)
   Max: 15

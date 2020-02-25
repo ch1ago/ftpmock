@@ -61,6 +61,9 @@ RSpec.describe Ftpmock::Cache do
           expect(Ftpmock::ListHelper).to receive(:read)
             .with(*expected_args)
             .and_return([123])
+          expect_verbose_alert :green,
+                               "ftpmock.cache.list 'foo'",
+                               'hit! (1 lines)'
         end
 
         it 'skips the block' do
@@ -90,6 +93,12 @@ RSpec.describe Ftpmock::Cache do
           expect(Ftpmock::ListHelper).to receive(:read)
             .with(*expected_args)
             .and_return(nil)
+          expect_verbose_alert :yellow,
+                               "ftpmock.cache.list 'foo'",
+                               'miss!'
+          expect_verbose_alert :green,
+                               "ftpmock.cache.list 'foo'",
+                               'storing 1 lines!'
         end
 
         it 'runs the block, returns from block, writes to cache' do
@@ -112,11 +121,14 @@ RSpec.describe Ftpmock::Cache do
     end
 
     describe 'get' do
-      let(:localfile) { "tmp/cache_get_#{SecureRandom.uuid}" }
+      let(:localfile) { 'tmp/cache_get_file' }
       describe 'if cache is found' do
         before do
           # Given 'GetHelper.read returns true'
           expect(Ftpmock::GetHelper).to receive(:read).and_return(true)
+          expect_verbose_alert :green,
+                               "ftpmock.cache.get 'remotefile'",
+                               'hit! (tmp/cache_get_file)'
         end
 
         it 'skips the block' do
@@ -136,8 +148,7 @@ RSpec.describe Ftpmock::Cache do
           expect(Ftpmock::GetHelper).not_to receive(:write)
 
           # When 'I run cache.get(remotefile)'
-          cache.get('remotefile', localfile) do
-          end
+          cache.get('remotefile', localfile) {}
         end
       end
 
@@ -145,9 +156,15 @@ RSpec.describe Ftpmock::Cache do
         before do
           # Given 'GetHelper.read returns false'
           expect(Ftpmock::GetHelper).to receive(:read).and_return(false)
+          expect_verbose_alert :yellow,
+                               "ftpmock.cache.get 'remotefile'",
+                               'miss!'
         end
 
         it 'runs the block and verifies remotefile fetching' do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.get 'remotefile'",
+                               'storing tmp/cache_get_file'
           expect(Ftpmock::GetHelper).to receive(:fetched?).and_return(true)
           expect(Ftpmock::GetHelper).to receive(:write)
 
@@ -182,6 +199,9 @@ RSpec.describe Ftpmock::Cache do
           before do
             # Given 'GetHelper.fetched? returns false'
             expect(Ftpmock::GetHelper).to receive(:fetched?).and_return(true)
+            expect_verbose_alert :green,
+                                 "ftpmock.cache.get 'remotefile'",
+                                 'storing tmp/cache_get_file'
           end
 
           it 'writes to cache' do
@@ -197,10 +217,14 @@ RSpec.describe Ftpmock::Cache do
     end
 
     describe 'put' do
-      let(:localfile) { "tmp/cache_put_#{SecureRandom.uuid}" }
+      let(:localfile) { 'tmp/cache_put_file' }
 
       describe 'if localfile does not exist' do
         it 'fails, skips block, skips comparing, skips writing to cache' do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.put 'remotefile'",
+                               'file exists?'
+
           block_has_run = false
 
           # Given 'localfile does not exist'
@@ -226,6 +250,10 @@ RSpec.describe Ftpmock::Cache do
 
       describe 'if cache hits' do
         before do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.put 'remotefile'",
+                               'file exists?'
+
           # Given 'localfile exists'
           expect(Ftpmock::PutHelper).to receive(:exist?).and_return(true)
 
@@ -234,6 +262,10 @@ RSpec.describe Ftpmock::Cache do
         end
 
         it 'skips block' do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.put 'remotefile'",
+                               'hit! (0 differing lines)'
+
           block_has_run = false
 
           # Given 'localfile and remotefile have the same content'
@@ -249,6 +281,10 @@ RSpec.describe Ftpmock::Cache do
         end
 
         it 'skips writing to cache' do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.put 'remotefile'",
+                               'hit! (0 differing lines)'
+
           # Given 'localfile and remotefile have the same content'
           expect(Ftpmock::PutHelper).to receive(:compare).and_return([])
 
@@ -261,6 +297,10 @@ RSpec.describe Ftpmock::Cache do
         end
 
         it 'compares localfile to remotefile' do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.put 'remotefile'",
+                               'hit! (0 differing lines)'
+
           # Given 'localfile and remotefile have the same content'
           expect(Ftpmock::PutHelper).to receive(:compare).and_return([])
 
@@ -272,6 +312,10 @@ RSpec.describe Ftpmock::Cache do
         describe 'comparing localfile to remotefile' do
           describe 'if they are the same' do
             it 'skips' do
+              expect_verbose_alert :green,
+                                   "ftpmock.cache.put 'remotefile'",
+                                   'hit! (0 differing lines)'
+
               # Given 'localfile and remotefile have the same content'
               expect(Ftpmock::PutHelper).to receive(:compare).and_return([])
 
@@ -283,10 +327,14 @@ RSpec.describe Ftpmock::Cache do
 
           describe 'if they are differ' do
             it 'fails and outputs message' do
+              expect_verbose_alert :red,
+                                   "ftpmock.cache.put 'remotefile'",
+                                   'hit! (1 differing lines)'
+
               # Given 'localfile and remotefile have the same content'
               expect(Ftpmock::PutHelper).to receive(:compare).and_return(['+a'])
               # Then 'it outputs message'
-              expect(Ftpmock::VerboseUtils).to receive(:puts).exactly(7).times
+              expect(Ftpmock::VerboseUtils).to receive(:puts).exactly(5).times
 
               # Then 'an error should be raised'
               expect do
@@ -301,6 +349,16 @@ RSpec.describe Ftpmock::Cache do
 
       describe 'if cache misses' do
         before do
+          expect_verbose_alert :green,
+                               "ftpmock.cache.put 'remotefile'",
+                               'file exists?'
+          expect_verbose_alert :yellow,
+                               "ftpmock.cache.put 'remotefile'",
+                               'miss!'
+          expect_verbose_alert :green,
+                               "ftpmock.cache.put 'remotefile'",
+                               'storing tmp/cache_put_file'
+
           # Given 'localfile exists'
           expect(Ftpmock::PutHelper).to receive(:exist?).and_return(true)
 
