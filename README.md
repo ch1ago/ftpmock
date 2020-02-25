@@ -2,6 +2,13 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/ftpmock`. To experiment with that code, run `bin/console` for an interactive prompt.
 
+## Status
+
+| Is It Working? | Is It Tested? | Code Quality | **# of Downloads** |  **Get Involved!** |
+|:---|:---|:---|:---|:---|
+| [![Master Build Status](https://api.travis-ci.org/thejamespinto/ftpmock.svg?branch=master)](https://travis-ci.org/thejamespinto/ftpmock) | [![Test Coverage](https://api.codeclimate.com/v1/badges/25ac02fa4774e3fcb569/test_coverage)](https://codeclimate.com/github/thejamespinto/ftpmock/test_coverage) | [![Maintainability](https://api.codeclimate.com/v1/badges/25ac02fa4774e3fcb569/maintainability)](https://codeclimate.com/github/thejamespinto/ftpmock/maintainability) | [![Downloads](http://img.shields.io/gem/dt/ftpmock.svg)](https://rubygems.org/gems/ftpmock) | [![GitHub Issues](https://img.shields.io/github/issues/thejamespinto/ftpmock.svg)](https://github.com/thejamespinto/ftpmock/issues) |
+
+
 TODO: Delete this and the text above, and describe your gem
 
 ## Installation

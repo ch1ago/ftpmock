@@ -1,4 +1,4 @@
-require 'bundler/setup'
+require 'setup'
 require 'net/sftp'
 require 'ftpmock'
 
