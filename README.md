@@ -92,11 +92,67 @@ Unlike VCR, Ftpmock combines your four credentials _(address + port + username +
 
 After checking out the repo, run `bin/setup` to install dependencies.
 
-Then, run `rake spec` to run the tests.
+Then, run `bundle exec rake spec` to run the tests.
 
 You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`.
+
+## Documentation
+
+![Chart](./images/ftpmock.png)
+
+- Core
+    - [x] Stubber
+    - [x] Configuration
+    - [x] Cache
+    - [x] Helpers
+- Proxies
+    - [x] Proxy for Ruby's native Net::FTP library
+    - [ ] Proxy for Jamis Buck's gem 'net-sftp'
+
+### Core instantiable classes & procedural modules
+
+links: [lib/ftpmock/core](./lib/ftpmock/core)
+
+- [x] stubber for proxies
+- [x] configuration class
+- [x] cache class
+- [x] cache path helper
+- [x] cache list helper
+- [x] cache get helper
+- [x] cache put helper
+
+### Proxy for Ruby's native Net::FTP library (Ftpmock::NetFtpProxy)
+
+links: [lib/ftpmock/proxies/net_ftp_proxy.rb](./lib/ftpmock/proxies/net_ftp_proxy.rb) , https://apidock.com/ruby/Net/FTP & https://github.com/ruby/ruby/tree/master/lib/net
+
+- [x] proxy class
+- [x] stubbers
+- [x] address & port forwarding
+- [x] username & password forwarding
+- [x] chdir forwarding
+- [x] pwd
+- [x] list
+- [x] get
+- [x] put
+- [ ] ssl support
+- [x] unit tests
+- [x] integration tests
+
+### Proxy for Jamis Buck's gem 'net-sftp' (Ftpmock::NetSftpProxy)
+
+links: [lib/ftpmock/proxies/net_sftp_proxy.rb](./lib/ftpmock/proxies/net_sftp_proxy.rb) , https://rubygems.org/gems/net-sftp & https://github.com/net-ssh/net-sftp
+
+- [x] proxy class
+- [x] stubbers
+- [ ] address & port forwarding
+- [ ] username & password forwarding
+- [ ] list
+- [ ] get
+- [ ] put
+- [ ] unit tests
+- [ ] integration tests
 
 ## Contributing
 
