@@ -1,3 +1,4 @@
+require 'pathname'
 require 'ftpmock/version'
 
 Dir['lib/ftpmock/{utils,core,helpers,proxies}/*.rb'].each do |f|

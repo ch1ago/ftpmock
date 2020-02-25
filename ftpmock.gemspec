@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['James Pinto']
   spec.email         = ['thejamespinto@gmail.com']
 
-  spec.summary       = 'Record and Replay FTP requests in Ruby tests.'
+  spec.summary       = 'Test your FTP calls offline.'
   spec.description   = 'Just like VCR and WebMock, but for FTP.'
   spec.homepage      = 'https://github.com/thejamespinto/ftpmock'
   spec.license       = 'MIT'
