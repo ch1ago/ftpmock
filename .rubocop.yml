@@ -105,3 +105,7 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   # Max: 100 (default)
   Max: 200
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'lib/ftpmock/proxies/*_proxy.rb'

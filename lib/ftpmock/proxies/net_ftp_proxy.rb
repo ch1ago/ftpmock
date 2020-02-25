@@ -33,10 +33,39 @@ module Ftpmock
       Net.const_set(:FTP, Real)
     end
 
+    PORT = 21
+
     # Instance Methods
 
-    def initialize(configuration: Ftpmock.configuration)
-      @configuration = configuration
+    # inspired by https://apidock.com/ruby/v2_6_3/Net/FTP/open/class
+    def self.open(host, *args)
+      if block_given?
+        proxy = new(host, *args)
+        begin
+          yield proxy
+        ensure
+          proxy.close
+        end
+      else
+        new(host, *args)
+      end
+    end
+
+    # inspired by https://apidock.com/ruby/v2_6_3/Net/FTP/new/class
+    def initialize(host = nil, *args)
+      @options = args.last.is_a?(Hash) ? args.pop : {}
+      @host = host
+      @configuration = @options[:configuration] || Ftpmock.configuration
+
+      if args.size == 2
+        @options[:username] ||= args[0]
+        @options[:password] ||= args[1]
+      end
+
+      if host
+        connect(host, @options[:port] || PORT)
+        login(@options[:username], @options[:password]) if @options[:username]
+      end
     end
 
     def real
@@ -52,7 +81,7 @@ module Ftpmock
 
     # connection methods
 
-    def connect(host, port = 21)
+    def connect(host, port = PORT)
       @real_connected = false
       @host = host
       @port = port
