@@ -158,6 +158,8 @@ links: [lib/ftpmock/proxies/net_sftp_proxy.rb](./lib/ftpmock/proxies/net_sftp_pr
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/thejamespinto/ftpmock.
 
+Changelog can be found at [CHANGELOG.md](./CHANGELOG.md)
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
