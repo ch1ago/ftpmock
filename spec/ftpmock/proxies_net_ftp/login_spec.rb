@@ -15,5 +15,15 @@ RSpec.describe Ftpmock::NetFtpProxy do
       subject.connect(host, port)
       subject.login(username, password)
     end
+
+    it 'can take one argument' do
+      subject.connect(host, port)
+      subject.login(username)
+    end
+
+    it 'can take zero arguments' do
+      subject.connect(host, port)
+      subject.login
+    end
   end
 end
