@@ -100,7 +100,7 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Documentation
 
-![Chart](./images/ftpmock.png)
+![Chart](./images/ftpmock1.png)
 
 - Core
     - [x] Stubber
