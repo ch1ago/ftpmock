@@ -7,7 +7,7 @@ end
 
 module Ftpmock
   class Error < StandardError; end
-  class GetNotFetched < StandardError; end
+  class GetNotFetched < Error; end
   class PutFileNotFound < Error; end
   class PutLocalDiffersFromCache < Error; end
 
