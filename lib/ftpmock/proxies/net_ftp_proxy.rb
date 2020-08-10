@@ -92,7 +92,7 @@ module Ftpmock
       true
     end
 
-    def login(username, password)
+    def login(username = '', password = '')
       @cache_connected || _raise_code_error_connect_before_login
       @cache = nil
       @real_logged = false
