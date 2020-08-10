@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Errors - Reparenting an error class.
 
 ### Security
-- .
+- Dependencies - rake 13.
 
 
 
