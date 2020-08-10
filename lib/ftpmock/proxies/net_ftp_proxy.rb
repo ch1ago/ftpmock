@@ -89,10 +89,12 @@ module Ftpmock
       StringUtils.all_present?(host, port) || _raise_not_connected
 
       @cache_connected = true
+      @has_invoked_connect = true
       true
     end
 
     def login(username, password)
+      @has_invoked_connect || _raise_code_error_connect_before_login
       @cache = nil
       @real_logged = false
       @username = username
@@ -102,6 +104,11 @@ module Ftpmock
 
       @cache_logged = true
       true
+    end
+
+    def _raise_code_error_connect_before_login
+      raise CodeError,
+            'please call ftp.connect(args) before calling ftp.login(args)'
     end
 
     def _real_connect_and_login

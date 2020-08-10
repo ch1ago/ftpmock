@@ -4,6 +4,7 @@ require 'ftpmock/core/configuration'
 
 module Ftpmock
   class Error < StandardError; end
+  class CodeError < Error; end
   class GetNotFetched < Error; end
   class PutFileNotFound < Error; end
   class PutLocalDiffersFromCache < Error; end
